@@ -1,0 +1,21 @@
+language: go
+go:
+  - 1.9.x
+
+before_script:
+  - go get github.com/mitchellh/gox
+script:
+  - gox -output="builds/{{.Dir}}_{{.OS}}_{{.Arch}}"
+
+before_deploy:
+  - git config --local user.name "Georges Haidar"
+  - git config --local user.email "ghaidar0@gmail.com"
+deploy:
+  provider: releases
+  api_key:
+    secure: jhMCcpmBU99FIj31Bh1KWV7qjOvrXBViskZB6eNe7jKJBMWy+qUXwESCk6DPzMMHdfEyG0jlLMZmDraYDfCJQaKUDdRHO8ztC9je1KcCmT/zywPCf99LO142Zs/sKuu74rn2HyfkLAAjmKfxyUTNr1WM+4qDCTBvB/C+foae1Tghz59a7/9cm25CwNStWMPY2dZ6zBlC1lbpMV+jXvHy4dABFbkVe/jVCJnparljww50XgV0OtLQytfN9Qz4Fuc2zlhi7OWYix5CDjLYU9O7ONavE66anA5Kyivxwj5EzzrsUBCGImLWPjdk/3paVidBS6mSR9TbwLoTG+JItJ7sDimoF21MXY5Vfp2e/2gg5+NvoEaIT9eo01Idfbc4WCqXEOnjnL8pvdKkH9t+hVZUyekyCPylEMSeexV7YhycQ25L6q+Y5/F6CH729AAclE/Rroob4QIqnTNQdY6WncbTT/LzZYt5sKcnPigZzlGQ8VQzr8LxIH7GeCReb2g+m3fv7qUfbrSecjME2y9M2gaYQt4aa/NxjGcFWOX9BGt5Kd6DSp4rtLLOuInSvr+CtwNEbBuKI6jVDaE69bvrqqOzilgmFk7U4yUTyHq7WofYk2et1BdvsFioyRr9YGuU2ojsMPrRuoYmFCZCeIlyG+/oKHhCaeEQx27Z1Qfz/krdJMI=
+  file_glob: true
+  file: builds/*
+  on:
+    repo: logbang/logbangcli
+    tags: true
